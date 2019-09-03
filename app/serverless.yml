@@ -1,0 +1,71 @@
+service: @@bucket-prefix@@-app-s2o
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  tracing: true
+  region: @@AwsRegion@@
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:*'
+        - 'dynamodb:*'
+      Resource:
+        - '*'
+    - Effect: "Allow" # Required X-Ray Permissions
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+
+package:
+  individually: true
+
+functions:
+
+  play-new-game:
+    handler: src/game/play-new-game.handler
+    cors: true
+    events:
+      - http:
+          path: play-game
+          method: get
+          cors: true
+    timeout: 30
+    environment:
+      BUCKET_NAME: '@@bucket-prefix@@-app-s2o'
+      DYNAMODB_TABLE: 'rock-paper-scissors'
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-plugin-optimize
+  - serverless-plugin-tracing
+
+resources:
+  Resources:
+    RockPaperScissorsBucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        BucketName: '@@bucket-prefix@@-app-s2o'
+        WebsiteConfiguration:
+          IndexDocument: 'index.html'
+          ErrorDocument: 'error.html'
+
+    RockPaperScissorsTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: Id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: Id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        SSESpecification:
+          SSEEnabled: true
+        TableName: 'rock-paper-scissors'

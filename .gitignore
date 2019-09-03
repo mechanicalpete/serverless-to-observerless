@@ -1,0 +1,18 @@
+# package directories
+coverage
+node_modules
+jspm_packages
+
+# Misc files
+test-report.html
+siege/siege-latest.tar.gz
+siege/siege-*
+
+# Serverless directories
+.serverless
+
+# Webpack directories
+.webpack
+
+# Temp files
+temp.*

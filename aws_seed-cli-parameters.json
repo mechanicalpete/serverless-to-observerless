@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "PipelineName",
+        "ParameterValue": "@@PipelineName@@"
+    },
+    {
+        "ParameterKey": "BucketPrefix",
+        "ParameterValue": "@@bucket-prefix@@"
+    },
+    {
+        "ParameterKey": "BucketRegion",
+        "ParameterValue": "@@AwsRegion@@"
+    }
+]

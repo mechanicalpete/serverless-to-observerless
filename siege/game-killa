@@ -1,0 +1,1 @@
+siege "https://xxxxxxxxxxx.execute-api.@@AwsRegion@@.amazonaws.com/dev/play-game?humanName=Pipeline%20Pete&humanChoice=ROCK"

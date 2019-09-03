@@ -1,0 +1,12 @@
+sudo apt-get update && sudo apt-get upgrade --show-upgraded -y
+rm -rf siege-*/
+wget http://download.joedog.org/siege/siege-latest.tar.gz
+tar -zxvf siege-latest.tar.gz
+cd siege-*/
+sudo apt-get install build-essential -y
+./configure
+make
+sudo make install
+siege.config
+siege -C
+

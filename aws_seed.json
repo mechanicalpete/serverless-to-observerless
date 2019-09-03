@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+        "PipelineName": "@@PipelineName@@",
+        "BucketPrefix": "@@bucket-prefix@@",
+        "BucketRegion": "@@AwsRegion@@"
+    }
+}

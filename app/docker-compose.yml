@@ -1,0 +1,10 @@
+version: '2'
+services:
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - 8000:8000
+      - 8100:8100
+    environment:
+      - SERVICES=dynamodb:8000,s3:8100

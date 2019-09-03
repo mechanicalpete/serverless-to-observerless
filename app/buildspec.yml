@@ -1,0 +1,28 @@
+version: 0.2
+
+env:
+  variables:
+    SLS_DEBUG: '*'
+    CI: 'true'
+    OVERRIDE_DYNAMODB_LOCAL_ENDPOINT: 'http://localhost:8000'
+    OVERRIDE_S3_LOCAL_ENDPOINT: 'http://localhost:8100'
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      - cd app
+      - docker-compose up -d localstack
+
+  pre_build:
+    commands:
+      - npm install
+
+  build:
+    commands:
+      - npm run test:coverage
+
+  post_build:
+    commands:
+      - npm run deploy:dev
