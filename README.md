@@ -3,7 +3,7 @@
 This is the code that have been used in the following presentations:
 
 1. 2019-08-26 ["Melbourne AWS User Group Monthly Meetup"](https://www.meetup.com/en-AU/AWS-AUS/events/qgxqpqyzlblc/)
-2. 2019-03-21 ["Real World Serverless: making and breaking, betting and banking"](https://www.meetup.com/en-AU/Perth-Serverless/events/259300664/):
+2. 2019-03-21 ["Real World Serverless: making and breaking, betting and banking"](https://www.meetup.com/en-AU/Perth-Serverless/events/259300664/)
 
 ## Elevator Pitch
 
