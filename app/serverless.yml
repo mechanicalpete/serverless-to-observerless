@@ -2,7 +2,7 @@ service: @@bucket-prefix@@-app-s2o
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   stage: ${opt:stage, 'dev'}
   tracing: true
   region: @@AwsRegion@@
