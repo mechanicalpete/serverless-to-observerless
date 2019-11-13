@@ -4,7 +4,9 @@ provider:
   name: aws
   runtime: nodejs10.x
   stage: ${opt:stage, 'dev'}
-  tracing: true
+  tracing:
+    apiGateway: true
+    lambda: true
   region: @@AwsRegion@@
   iamRoleStatements:
     - Effect: 'Allow'
