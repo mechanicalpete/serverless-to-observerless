@@ -27,6 +27,6 @@ phases:
     commands:
       - npm run deploy:dev
       - cd static
-      - APIID=$(aws apigateway get-rest-apis --query "items[?name=='dev-latency2019s2o-app-s2o'].id | [0]" | sed "s/\"//g")
+      - APIID=$(aws apigateway get-rest-apis --query "items[?name=='dev-@@bucket-prefix@@-app-s2o'].id | [0]" | sed "s/\"//g")
       - sed -i "s/_PUT_APIID_HERE/${APIID}/g" index.html
-      - aws s3 cp . s3://latency2019s2o-app-s2o --recursive --acl public-read
+      - aws s3 cp . s3://@@bucket-prefix@@-app-s2o --recursive --acl public-read

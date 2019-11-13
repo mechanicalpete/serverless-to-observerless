@@ -24,7 +24,7 @@
 
         function onNameChange(event) {
             var playerName = document.getElementById('nameEntry').value;
-            var baseUri = `https://_PUT_APIID_HERE.execute-api.ap-southeast-2.amazonaws.com/dev/play-game?humanName=${playerName}&humanChoice=`
+            var baseUri = `https://_PUT_APIID_HERE.execute-api.@@AwsRegion@@.amazonaws.com/dev/play-game?humanName=${playerName}&humanChoice=`
             var rockUrl = `${baseUri}ROCK`;
             var paperUrl = `${baseUri}PAPER`;
             var scissorsUrl = `${baseUri}SCISSORS`;
