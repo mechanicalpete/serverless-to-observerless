@@ -3,6 +3,9 @@ coverage
 node_modules
 jspm_packages
 
+# VSCode
+.vscode
+
 # Misc files
 test-report.html
 siege/siege-latest.tar.gz

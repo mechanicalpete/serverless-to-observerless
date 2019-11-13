@@ -200,7 +200,7 @@ Resources:
                 BranchName: 'master'
                 RepositoryName: !GetAtt CodeCommitRepository.Name
               RunOrder: 1
-        - Name: 'AdministerPipeline'
+        - Name: AdministerPipeline
           Actions:
             - Name: 'AdministerPipeline'
               ActionTypeId:
@@ -218,7 +218,7 @@ Resources:
               InputArtifacts:
                 - Name: 'CodeCommitSource'
               RunOrder: 1
-        - Name: 'Deploy'
+        - Name: Deploy
           Actions:
             - Name: DeployApplication
               ActionTypeId:
@@ -281,6 +281,7 @@ Resources:
                   - 'iam:GetRolePolicy'
                   - 'iam:PassRole'
                   - 'iam:PutRolePolicy'
+                  - 'iam:CreateServiceLinkedRole'
                   - 'lambda:AddPermission'
                   - 'lambda:CreateFunction'
                   - 'lambda:DeleteFunction'
@@ -299,12 +300,17 @@ Resources:
                   - 'logs:PutLogEvents'
                   - 's3:CreateBucket'
                   - 's3:DeleteBucket'
+                  - 's3:DeleteBucketPolicy'
                   - 's3:DeleteObject'
                   - 's3:Get*'
                   - 's3:GetEncryptionConfiguration'
                   - 's3:ListBucket'
+                  - 's3:PutBucketPolicy'
+                  - 's3:PutBucketWebsite'
                   - 's3:PutEncryptionConfiguration'
                   - 's3:PutObject'
+                  - 's3:PutObjectAcl'
+                  - 's3:PutObjectVersionAcl'
                   - 's3:SetBucketEncryption'
                   - 's3:PutBucketWebsite'
                 Resource: '*'

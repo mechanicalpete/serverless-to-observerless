@@ -1,17 +1,13 @@
 import { APIGatewayProxyEvent, Callback, Context } from 'aws-lambda';
 import { v4 as uuid } from 'uuid';
 import { storeGameResults } from '../capability.dynamodb';
-// import { initialiseFunctionShield } from '../function-shield';
-import { logger } from '../logging';
 import { storeResultsPage } from '../capability.s3';
-import { CallbackResponse, Choices, RockPaperScissorsGame } from '../types';
 import { BUCKET_NAME } from '../constants';
-import { String } from 'aws-sdk/clients/signer';
+import { logger } from '../logging';
+import { CallbackResponse, Choices, RockPaperScissorsGame } from '../types';
 
 const AWSXRay = require('aws-xray-sdk');
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));
-
-// initialiseFunctionShield();
 
 export async function handler(requestEvent: APIGatewayProxyEvent, context: Context, callback: Callback) {
 
@@ -125,7 +121,7 @@ function determineWinner(game: RockPaperScissorsGame): RockPaperScissorsGame {
 async function generateDrawResults(game: RockPaperScissorsGame): Promise<void> {
     logger.info(`generateDrawResults() ${JSON.stringify(game)}`);
 
-    const html = `<html><body><h1>Game is a draw as everyone chose ${Choices[game.humanChose as Choices]}</h1></body></html>`;
+    const html = generateShell(`Game is a draw as everyone chose ${Choices[game.humanChose as Choices]}`);
     await storeResultsPage(game, html);
 }
 
@@ -134,9 +130,9 @@ async function generateWinResults(game: RockPaperScissorsGame): Promise<void> {
     let html: string;
 
     if (game.didHumanWin) {
-        html = `<html><body><h1>${game.humanName} won with ${Choices[game.humanChose as Choices]} beating ${Choices[game.lambdaChose as Choices]}!</h1></body></html>`;
+        html = generateShell(`${game.humanName} won with ${Choices[game.humanChose as Choices]} beating ${Choices[game.lambdaChose as Choices]}!`);
     } else {
-        html = `<html><body><h1>Lambda won with ${Choices[game.lambdaChose as Choices]} beating ${Choices[game.humanChose as Choices]}!</h1></body></html>`;
+        html = generateShell(`Lambda won with ${Choices[game.lambdaChose as Choices]} beating ${Choices[game.humanChose as Choices]}!`);
     }
 
     await storeResultsPage(game, html);
@@ -182,3 +178,53 @@ interface Subsegment {
     addError(error: Error): void;
     close(): void;
 }
+
+function generateShell(body: string): string {
+    let shell = '';
+
+    shell += `<!DOCTYPE html>\n`;
+    shell += `<html>\n`;
+    shell += `<head>\n`;
+    shell += `    <title>Win, Lost of Draw!</title>\n`;
+    shell += `    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n`;
+    shell += `    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n`;
+    shell += `    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">\n`;
+    shell += `    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.grey-pink.min.css" />\n`;
+    shell += `    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">\n`;
+    shell += `    <style>\n`;
+    shell += `        .mdl-card__supporting-text {\n`;
+    shell += `            width: unset;\n`;
+    shell += `            padding: 6px;\n`;
+    shell += `        }\n`;
+    shell += `    </style>\n`;
+    shell += `</head>\n`;
+    shell += `<body>\n`;
+    shell += `    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">\n`;
+    shell += `        <header class="mdl-layout__header">\n`;
+    shell += `            <div class="mdl-layout__header-row">\n`;
+    shell += `                <span class="mdl-layout__title">Win, Loss or Draw?</span>\n`;
+    shell += `            </div>\n`;
+    shell += `        </header>\n`;
+    shell += `        <main class="mdl-layout__content">\n`;
+    shell += `            <div class="mdl-grid">\n`;
+    shell += `\n`;
+    shell += `                <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">\n`;
+    shell += `                    <div class="mdl-card__title">\n`;
+    shell += `                        <h2 class="mdl-card__title-text">${body}</h2>\n`;
+    shell += `                    </div>\n`;
+    shell += `                    <div class="mdl-card__supporting-text">\n`;
+    shell += `                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="javascript:window.history.back()">Play Again?</button>\n`;
+    shell += `                    </div>\n`;
+    shell += `                </div>\n`;
+    shell += `            </div>\n`;
+    shell += `        </main>\n`;
+    shell += `    </div>\n`;
+    shell += `    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>\n`;
+    shell += `</body>\n`;
+    shell += `</html>\n`;
+
+    return shell;
+}
+/*
+window.history.back();
+*/

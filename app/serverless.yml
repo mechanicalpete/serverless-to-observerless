@@ -9,12 +9,14 @@ provider:
     lambda: true
   region: @@AwsRegion@@
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: "Allow"
       Action:
-        - 's3:*'
-        - 'dynamodb:*'
+        - "dynamodb:PutItem"
+        - "s3:PutObject*"
       Resource:
-        - '*'
+        - Fn::GetAtt: RockPaperScissorsTable.Arn
+        - Fn::GetAtt: RockPaperScissorsBucket.Arn
+        - Fn::Join: ["", [{ Fn::GetAtt: RockPaperScissorsBucket.Arn }, "/*"]]
     - Effect: "Allow" # Required X-Ray Permissions
       Action:
         - "xray:PutTraceSegments"
