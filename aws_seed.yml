@@ -41,6 +41,7 @@ Resources:
 
   CodeCommitRepository:
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     DependsOn:
       - CloudFormationDeployActionRole
     Type: 'AWS::CodeCommit::Repository'
