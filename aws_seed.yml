@@ -57,6 +57,11 @@ Resources:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
       BucketName: !Sub '${BucketPrefix}-${BucketRegion}-${BucketSuffix}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
 
   CloudFormationDeployActionRole:
     Type: 'AWS::IAM::Role'
