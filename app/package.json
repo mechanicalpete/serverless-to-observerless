@@ -22,7 +22,7 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.103",
+    "@types/aws-lambda": "^8.10.104",
     "@types/jest": "^29.0.1",
     "@types/node": "^18.7.17",
     "@types/node-forge": "^1.0.4",
