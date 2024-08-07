@@ -41,7 +41,7 @@
     "request": "^2.88.2",
     "request-debug": "^0.2.0",
     "request-promise-native": "^1.0.9",
-    "serverless": "^4.1.10",
+    "serverless": "^4.1.12",
     "serverless-offline": "^13.3.3",
     "serverless-plugin-optimize": "^4.2.1-rc.1",
     "serverless-plugin-tracing": "^2.0.0",
