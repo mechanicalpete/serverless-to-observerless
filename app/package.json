@@ -18,7 +18,7 @@
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "aws-xray-sdk": "^3.10.2",
     "node-forge": "^1.4.0",
-    "uuid": "^11.0.3",
+    "uuid": "^14.0.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
